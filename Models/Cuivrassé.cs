@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BatailleChimique
+namespace BatailleChimiqueWinform.Models;
+class Cuivrassé : Bateau
 {
-    class Cuivrassé : Bateau
+    public Cuivrassé(int id, Size size, Coordinate head, List<Coordinate> coords) : base(id, size, head, coords)
     {
-        public Cuivrassé(int id) : base(id)
-        {
-            this.type = Type.Cuivre;
-        }
+        this._Type = Type.Cuivre;
     }
 }

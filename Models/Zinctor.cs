@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BatailleChimique
+namespace BatailleChimiqueWinform.Models;
+class Zinctor : Bateau
 {
-    class Zinctor : Bateau
+    public Zinctor(int id, Size size, Coordinate head, List<Coordinate> coords) : base(id, size, head, coords)
     {
-        public Zinctor (int id) : base(id)
-        {
-            this.type = Type.Zinc;
-        }
+        this._Type = Type.Zinc;
     }
 }

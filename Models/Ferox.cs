@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BatailleChimique
+namespace BatailleChimiqueWinform.Models;
+
+class Ferox : Bateau
 {
-    class Ferox : Bateau
+    public Ferox(int id, Size size, Coordinate head, List<Coordinate> coords) : base(id, size, head, coords)
     {
-        public Ferox(int id) : base(id)
-        {
-            this.type = Type.Fer; 
-        }
+        this._Type = Type.Fer;
     }
 }

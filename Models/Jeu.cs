@@ -4,9 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BatailleChimique
+namespace BatailleChimiqueWinform.Models;
+
+class Jeu
 {
-    class Jeu
+    Board[] boards;
+
+    Jeu()
     {
+        boards = new Board[4];
+        for (int i = 0; i < 2; i++)
+        {
+            boards[i] = new Board();
+        }
     }
 }

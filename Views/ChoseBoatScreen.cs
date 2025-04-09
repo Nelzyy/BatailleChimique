@@ -24,11 +24,11 @@ namespace BatailleChimiqueWinform
                     button.FlatAppearance.BorderSize = 2;
                     button.FlatStyle = FlatStyle.Flat;
                     button.ForeColor = Color.White;
-                    button.Location = new Point(50 + (50 * j), 190 + (50 * i));
+                    button.Location = new Point(50 + (50 * j), 50 + (50 * i));
                     button.Size = new Size(50, 50);
                     button.Text = "";
                     button.UseVisualStyleBackColor = false;
-                    Controls.Add(button);
+                    TabPanel.Controls.Add(button);
                 }
             }
             ResumeLayout();
