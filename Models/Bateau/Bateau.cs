@@ -29,16 +29,16 @@ class Bateau
 
     protected Bateau(int id, Size size, Coordinate head, List<Coordinate> coords)
     {
-        this._Id = id;
-        this._Size = size;
+        _Id = id;
+        _Size = size;
         SetSize(size);
-        this._Head = head;
-        this._Coordinate = coords;
+        _Head = head;
+        _Coordinate = coords;
     }
 
     public List<Coordinate> Coordinates
     {
-        get => this._Coordinate;
+        get => _Coordinate;
     }
 
     private void SetSize(Size size)
@@ -46,16 +46,16 @@ class Bateau
         switch (size)
         {
             case Size.tiny:
-                this._Length = 2;
+                _Length = 2;
                 break;
             case Size.tinyMiddle:
-                this._Length = 3;
+                _Length = 3;
                 break;
             case Size.bigMiddle:
-                this._Length = 4;
+                _Length = 4;
                 break;
             case Size.big:
-                this._Length = 5;
+                _Length = 5;
                 break;
         }
     }

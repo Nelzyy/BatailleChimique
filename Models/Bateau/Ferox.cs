@@ -6,16 +6,10 @@ using System.Threading.Tasks;
 
 namespace BatailleChimiqueWinform.Models;
 
-class Jeu
+class Ferox : Bateau
 {
-    Board[] boards;
-
-    Jeu()
+    public Ferox(int id, Size size, Coordinate head, List<Coordinate> coords) : base(id, size, head, coords)
     {
-        boards = new Board[4];
-        for (int i = 0; i < 2; i++)
-        {
-            boards[i] = new Board();
-        }
+        _Type = Type.Fer;
     }
 }

@@ -16,5 +16,8 @@ namespace BatailleChimiqueWinform.Models
             this._X = x;
             this._Y = y;
         }
+
+        public int X { get; }
+        public int Y { get; }
     }
 }

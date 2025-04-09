@@ -9,6 +9,6 @@ class Cuivrassé : Bateau
 {
     public Cuivrassé(int id, Size size, Coordinate head, List<Coordinate> coords) : base(id, size, head, coords)
     {
-        this._Type = Type.Cuivre;
+        _Type = Type.Cuivre;
     }
 }
