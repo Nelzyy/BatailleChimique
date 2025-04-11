@@ -120,6 +120,7 @@
             FiveCaseButton.TabIndex = 9;
             FiveCaseButton.Text = "5 Cases";
             FiveCaseButton.UseVisualStyleBackColor = false;
+            FiveCaseButton.Click += ChoseTypeBoat_Click;
             // 
             // FourCaseButton
             // 
@@ -135,6 +136,7 @@
             FourCaseButton.TabIndex = 8;
             FourCaseButton.Text = "4 Cases";
             FourCaseButton.UseVisualStyleBackColor = false;
+            FourCaseButton.Click += ChoseTypeBoat_Click;
             // 
             // ThreeCaseButton2
             // 
@@ -150,6 +152,7 @@
             ThreeCaseButton2.TabIndex = 7;
             ThreeCaseButton2.Text = "3 Cases";
             ThreeCaseButton2.UseVisualStyleBackColor = false;
+            ThreeCaseButton2.Click += ChoseTypeBoat_Click;
             // 
             // ThreeCaseButton1
             // 
@@ -165,6 +168,7 @@
             ThreeCaseButton1.TabIndex = 6;
             ThreeCaseButton1.Text = "3 Cases";
             ThreeCaseButton1.UseVisualStyleBackColor = false;
+            ThreeCaseButton1.Click += ChoseTypeBoat_Click;
             // 
             // TwoCaseButton
             // 
@@ -180,6 +184,7 @@
             TwoCaseButton.TabIndex = 5;
             TwoCaseButton.Text = "2 Cases";
             TwoCaseButton.UseVisualStyleBackColor = false;
+            TwoCaseButton.Click += ChoseTypeBoat_Click;
             // 
             // CancelButton
             // 

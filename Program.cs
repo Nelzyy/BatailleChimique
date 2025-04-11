@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using BatailleChimiqueWinform.Controller;
 
 namespace BatailleChimiqueWinform
 {
@@ -12,9 +13,8 @@ namespace BatailleChimiqueWinform
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ChoseBoatScreen());
+            MainController mainController = new();
+            mainController.ShowChoseBoatScreen();
         }
     }
 }

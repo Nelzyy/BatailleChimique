@@ -41,15 +41,15 @@ class Player
         _IsTurn = !_IsTurn;
     }
 
-    public void FillBoat(List<Coordinate> coords, Size size, int id, Type type)
+    public void FillBoat(List<Coordinate> coords, SizeBoat size, int id, MaterialType type)
     {
         if (_PlayerBoard.BoatCount < Board._BoatMax)
         {
             Bateau boat = type switch
             {
-                Type.Cuivre => new Cuivrassé(id, size, coords[0], coords),
-                Type.Fer => new Ferox(id, size, coords[0], coords),
-                Type.Zinc => new Zinctor(id, size, coords[0], coords),
+                MaterialType.Cuivre => new Cuivrassé(id, size, coords[0], coords),
+                MaterialType.Fer => new Ferox(id, size, coords[0], coords),
+                MaterialType.Zinc => new Zinctor(id, size, coords[0], coords),
                 _ => throw new ArgumentException("Invalid boat type.")
             };
             _PlayerBoard.AddBoat(boat);

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 namespace BatailleChimiqueWinform.Models;
 class Cuivrassé : Bateau
 {
-    public Cuivrassé(int id, Size size, Coordinate head, List<Coordinate> coords) : base(id, size, head, coords)
+    public Cuivrassé(int id, SizeBoat size, Coordinate head, List<Coordinate> coords) : base(id, size, head, coords)
     {
-        _Type = Type.Cuivre;
+        _Type = MaterialType.Cuivre;
     }
 }

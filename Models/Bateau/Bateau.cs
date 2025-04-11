@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BatailleChimiqueWinform.Models;
-enum Type
+enum MaterialType
 {
     Cuivre,
     Fer,
     Zinc
 }
-enum Size
+enum SizeBoat
 {
     tiny,
     tinyMiddle,
@@ -21,13 +21,13 @@ enum Size
 class Bateau
 {
     private int _Id;
-    protected Type _Type;
-    protected Size _Size;
+    protected MaterialType _Type;
+    protected SizeBoat _Size;
     protected int _Length;
     private Coordinate _Head;
     private List<Coordinate> _Coordinate;
 
-    protected Bateau(int id, Size size, Coordinate head, List<Coordinate> coords)
+    protected Bateau(int id, SizeBoat size, Coordinate head, List<Coordinate> coords)
     {
         _Id = id;
         _Size = size;
@@ -41,20 +41,20 @@ class Bateau
         get => _Coordinate;
     }
 
-    private void SetSize(Size size)
+    private void SetSize(SizeBoat size)
     {
         switch (size)
         {
-            case Size.tiny:
+            case SizeBoat.tiny:
                 _Length = 2;
                 break;
-            case Size.tinyMiddle:
+            case SizeBoat.tinyMiddle:
                 _Length = 3;
                 break;
-            case Size.bigMiddle:
+            case SizeBoat.bigMiddle:
                 _Length = 4;
                 break;
-            case Size.big:
+            case SizeBoat.big:
                 _Length = 5;
                 break;
         }

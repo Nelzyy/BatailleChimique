@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 namespace BatailleChimiqueWinform.Models;
 class Zinctor : Bateau
 {
-    public Zinctor(int id, Size size, Coordinate head, List<Coordinate> coords) : base(id, size, head, coords)
+    public Zinctor(int id, SizeBoat size, Coordinate head, List<Coordinate> coords) : base(id, size, head, coords)
     {
-        _Type = Type.Zinc;
+        _Type = MaterialType.Zinc;
     }
 }

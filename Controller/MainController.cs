@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace BatailleChimiqueWinform.Controller;
+using BatailleChimiqueWinform.Models;
 
-namespace BatailleChimiqueWinform.Controller
+public class MainController
 {
-    class MainController
+    private ChoseBoatScreen _ChoseBoatScreen;
+    private Game _Game;
+    public MainController()
     {
+        this._ChoseBoatScreen = new();
+        this._Game = new();
+    }
+    public void ShowChoseBoatScreen()
+    {
+        Application.EnableVisualStyles();
+        Application.Run(this._ChoseBoatScreen);
     }
 }
