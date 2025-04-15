@@ -31,7 +31,7 @@
             TitlePanel = new Panel();
             TitleLabel = new Label();
             TabPanel = new Panel();
-            mainPanel = new Panel();
+            MainPanel = new Panel();
             FiveCaseButton = new Button();
             FourCaseButton = new Button();
             ThreeCaseButton2 = new Button();
@@ -39,7 +39,7 @@
             TwoCaseButton = new Button();
             CancelButton = new Button();
             RotateButton = new Button();
-            ExtMidButton = new Button();
+            PreviewModeButton = new Button();
             ValidateButton = new Button();
             DeleteButton = new Button();
             CuivrasséPanel = new Panel();
@@ -49,7 +49,7 @@
             ZinctorPanel = new Panel();
             ZinctorLabel = new Label();
             TitlePanel.SuspendLayout();
-            mainPanel.SuspendLayout();
+            MainPanel.SuspendLayout();
             CuivrasséPanel.SuspendLayout();
             FeroxPanel.SuspendLayout();
             ZinctorPanel.SuspendLayout();
@@ -85,26 +85,26 @@
             TabPanel.Size = new Size(531, 536);
             TabPanel.TabIndex = 1;
             // 
-            // mainPanel
+            // MainPanel
             // 
-            mainPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            mainPanel.Controls.Add(FiveCaseButton);
-            mainPanel.Controls.Add(FourCaseButton);
-            mainPanel.Controls.Add(ThreeCaseButton2);
-            mainPanel.Controls.Add(ThreeCaseButton1);
-            mainPanel.Controls.Add(TwoCaseButton);
-            mainPanel.Controls.Add(CancelButton);
-            mainPanel.Controls.Add(RotateButton);
-            mainPanel.Controls.Add(ExtMidButton);
-            mainPanel.Controls.Add(ValidateButton);
-            mainPanel.Controls.Add(DeleteButton);
-            mainPanel.Controls.Add(CuivrasséPanel);
-            mainPanel.Controls.Add(FeroxPanel);
-            mainPanel.Controls.Add(ZinctorPanel);
-            mainPanel.Location = new Point(537, 0);
-            mainPanel.Name = "mainPanel";
-            mainPanel.Size = new Size(646, 760);
-            mainPanel.TabIndex = 2;
+            MainPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            MainPanel.Controls.Add(FiveCaseButton);
+            MainPanel.Controls.Add(FourCaseButton);
+            MainPanel.Controls.Add(ThreeCaseButton2);
+            MainPanel.Controls.Add(ThreeCaseButton1);
+            MainPanel.Controls.Add(TwoCaseButton);
+            MainPanel.Controls.Add(CancelButton);
+            MainPanel.Controls.Add(RotateButton);
+            MainPanel.Controls.Add(PreviewModeButton);
+            MainPanel.Controls.Add(ValidateButton);
+            MainPanel.Controls.Add(DeleteButton);
+            MainPanel.Controls.Add(CuivrasséPanel);
+            MainPanel.Controls.Add(FeroxPanel);
+            MainPanel.Controls.Add(ZinctorPanel);
+            MainPanel.Location = new Point(537, 0);
+            MainPanel.Name = "MainPanel";
+            MainPanel.Size = new Size(646, 760);
+            MainPanel.TabIndex = 2;
             // 
             // FiveCaseButton
             // 
@@ -120,7 +120,7 @@
             FiveCaseButton.TabIndex = 9;
             FiveCaseButton.Text = "5 Cases";
             FiveCaseButton.UseVisualStyleBackColor = false;
-            FiveCaseButton.Click += ChoseTypeBoat_Click;
+            FiveCaseButton.Click += ChoseSizeBoat_Click;
             // 
             // FourCaseButton
             // 
@@ -136,7 +136,7 @@
             FourCaseButton.TabIndex = 8;
             FourCaseButton.Text = "4 Cases";
             FourCaseButton.UseVisualStyleBackColor = false;
-            FourCaseButton.Click += ChoseTypeBoat_Click;
+            FourCaseButton.Click += ChoseSizeBoat_Click;
             // 
             // ThreeCaseButton2
             // 
@@ -152,7 +152,7 @@
             ThreeCaseButton2.TabIndex = 7;
             ThreeCaseButton2.Text = "3 Cases";
             ThreeCaseButton2.UseVisualStyleBackColor = false;
-            ThreeCaseButton2.Click += ChoseTypeBoat_Click;
+            ThreeCaseButton2.Click += ChoseSizeBoat_Click;
             // 
             // ThreeCaseButton1
             // 
@@ -168,7 +168,7 @@
             ThreeCaseButton1.TabIndex = 6;
             ThreeCaseButton1.Text = "3 Cases";
             ThreeCaseButton1.UseVisualStyleBackColor = false;
-            ThreeCaseButton1.Click += ChoseTypeBoat_Click;
+            ThreeCaseButton1.Click += ChoseSizeBoat_Click;
             // 
             // TwoCaseButton
             // 
@@ -184,7 +184,7 @@
             TwoCaseButton.TabIndex = 5;
             TwoCaseButton.Text = "2 Cases";
             TwoCaseButton.UseVisualStyleBackColor = false;
-            TwoCaseButton.Click += ChoseTypeBoat_Click;
+            TwoCaseButton.Click += ChoseSizeBoat_Click;
             // 
             // CancelButton
             // 
@@ -200,6 +200,7 @@
             CancelButton.TabIndex = 4;
             CancelButton.Text = "Annuler";
             CancelButton.UseVisualStyleBackColor = false;
+            CancelButton.Click += CancelButton_Click;
             // 
             // RotateButton
             // 
@@ -215,21 +216,23 @@
             RotateButton.TabIndex = 3;
             RotateButton.Text = "Rotation";
             RotateButton.UseVisualStyleBackColor = false;
+            RotateButton.Click += RotateButton_Click;
             // 
-            // ExtMidButton
+            // PreviewModeButton
             // 
-            ExtMidButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            ExtMidButton.BackColor = Color.FromArgb(30, 30, 30);
-            ExtMidButton.FlatAppearance.BorderColor = Color.Black;
-            ExtMidButton.FlatStyle = FlatStyle.Flat;
-            ExtMidButton.Font = new Font("Sitka Small", 11.25F, FontStyle.Bold);
-            ExtMidButton.ForeColor = Color.White;
-            ExtMidButton.Location = new Point(25, 584);
-            ExtMidButton.Name = "ExtMidButton";
-            ExtMidButton.Size = new Size(182, 36);
-            ExtMidButton.TabIndex = 2;
-            ExtMidButton.Text = "Extrémiter";
-            ExtMidButton.UseVisualStyleBackColor = false;
+            PreviewModeButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            PreviewModeButton.BackColor = Color.FromArgb(30, 30, 30);
+            PreviewModeButton.FlatAppearance.BorderColor = Color.Black;
+            PreviewModeButton.FlatStyle = FlatStyle.Flat;
+            PreviewModeButton.Font = new Font("Sitka Small", 11.25F, FontStyle.Bold);
+            PreviewModeButton.ForeColor = Color.White;
+            PreviewModeButton.Location = new Point(25, 584);
+            PreviewModeButton.Name = "PreviewModeButton";
+            PreviewModeButton.Size = new Size(182, 36);
+            PreviewModeButton.TabIndex = 2;
+            PreviewModeButton.Text = "Extrémité";
+            PreviewModeButton.UseVisualStyleBackColor = false;
+            PreviewModeButton.Click += PreviewModeButton_Click;
             // 
             // ValidateButton
             // 
@@ -271,13 +274,14 @@
             CuivrasséPanel.Location = new Point(439, 40);
             CuivrasséPanel.Name = "CuivrasséPanel";
             CuivrasséPanel.Size = new Size(182, 320);
-            CuivrasséPanel.TabIndex = 1;
+            CuivrasséPanel.TabIndex = 12;
+            CuivrasséPanel.Click += ChoseTypeBoat_Click;
             // 
             // CuivrasséLabel
             // 
             CuivrasséLabel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             CuivrasséLabel.AutoSize = true;
-            CuivrasséLabel.Font = new Font("Javanese Text", 14.25F, FontStyle.Underline, GraphicsUnit.Point, 0);
+            CuivrasséLabel.Font = new Font("Javanese Text", 14F, FontStyle.Underline);
             CuivrasséLabel.ForeColor = Color.White;
             CuivrasséLabel.Location = new Point(45, 15);
             CuivrasséLabel.Name = "CuivrasséLabel";
@@ -294,13 +298,14 @@
             FeroxPanel.Location = new Point(232, 40);
             FeroxPanel.Name = "FeroxPanel";
             FeroxPanel.Size = new Size(182, 320);
-            FeroxPanel.TabIndex = 1;
+            FeroxPanel.TabIndex = 11;
+            FeroxPanel.Click += ChoseTypeBoat_Click;
             // 
             // Ferox
             // 
             Ferox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             Ferox.AutoSize = true;
-            Ferox.Font = new Font("Javanese Text", 14.25F, FontStyle.Underline, GraphicsUnit.Point, 0);
+            Ferox.Font = new Font("Javanese Text", 14F, FontStyle.Underline);
             Ferox.ForeColor = Color.White;
             Ferox.Location = new Point(45, 15);
             Ferox.Name = "Ferox";
@@ -317,13 +322,14 @@
             ZinctorPanel.Location = new Point(25, 40);
             ZinctorPanel.Name = "ZinctorPanel";
             ZinctorPanel.Size = new Size(182, 320);
-            ZinctorPanel.TabIndex = 0;
+            ZinctorPanel.TabIndex = 10;
+            ZinctorPanel.Click += ChoseTypeBoat_Click;
             // 
             // ZinctorLabel
             // 
             ZinctorLabel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             ZinctorLabel.AutoSize = true;
-            ZinctorLabel.Font = new Font("Javanese Text", 14.25F, FontStyle.Underline, GraphicsUnit.Point, 0);
+            ZinctorLabel.Font = new Font("Javanese Text", 14F, FontStyle.Underline);
             ZinctorLabel.ForeColor = Color.White;
             ZinctorLabel.Location = new Point(45, 15);
             ZinctorLabel.Name = "ZinctorLabel";
@@ -337,7 +343,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(40, 40, 40);
             ClientSize = new Size(1184, 761);
-            Controls.Add(mainPanel);
+            Controls.Add(MainPanel);
             Controls.Add(TabPanel);
             Controls.Add(TitlePanel);
             MinimumSize = new Size(1200, 800);
@@ -345,7 +351,7 @@
             Text = "Bataille Chimique";
             TitlePanel.ResumeLayout(false);
             TitlePanel.PerformLayout();
-            mainPanel.ResumeLayout(false);
+            MainPanel.ResumeLayout(false);
             CuivrasséPanel.ResumeLayout(false);
             CuivrasséPanel.PerformLayout();
             FeroxPanel.ResumeLayout(false);
@@ -359,7 +365,7 @@
 
         private Panel TitlePanel;
         private Panel TabPanel;
-        private Panel mainPanel;
+        private Panel MainPanel;
         private Label TitleLabel;
         private Panel CuivrasséPanel;
         private Panel FeroxPanel;
@@ -371,7 +377,7 @@
         private Button ValidateButton;
         private Button CancelButton;
         private Button RotateButton;
-        private Button ExtMidButton;
+        private Button PreviewModeButton;
         private Button FiveCaseButton;
         private Button FourCaseButton;
         private Button ThreeCaseButton2;

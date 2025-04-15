@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BatailleChimiqueWinform.Models
 {
-    class Coordinate
+    public class Coordinate
     {
         private int _X;
         private int _Y;
@@ -17,7 +17,12 @@ namespace BatailleChimiqueWinform.Models
             this._Y = y;
         }
 
-        public int X { get; }
-        public int Y { get; }
+        public override string ToString()
+        {
+            return "X : " + _X + " Y : " + _Y;
+        }
+
+        public int X => _X;
+        public int Y => _Y;
     }
 }

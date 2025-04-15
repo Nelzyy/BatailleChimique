@@ -19,14 +19,10 @@ namespace BatailleChimiqueWinform.Models
             _Coordinate = new List<Coordinate>();
         }
 
-        public int? GetIdBoat()
+        public int IdBoat
         {
-            return _IdBoat;
-        }
-
-        public void SetIdBoat(int id)
-        {
-            _IdBoat = id;
+            get => (int)_IdBoat!;
+            set => _IdBoat = value;
         }
 
         public void ClearIdBoat()
@@ -34,21 +30,80 @@ namespace BatailleChimiqueWinform.Models
             _IdBoat = null;
         }
 
-        public SizeBoat? GetSize()
+        public MaterialType MaterialType
         {
-            return _Size;
+            get => (MaterialType)_MaterialType!;
+            set => _MaterialType = value;
         }
-        public void SetSize(SizeBoat size)
+
+        public void ClearMaterialType()
         {
-            _Size = size;
+            _MaterialType = null;
         }
+
+        public SizeBoat Size
+        {
+            get => (SizeBoat)_Size!;
+            set => _Size = value;
+        }
+
+
         public void ClearSize()
         {
             _Size = null;
         }
-        public void clear()
+
+        public Coordinate Head
+        {
+            get => _Head!;
+            set => _Head = value;
+        }
+
+        public void ClearHead()
+        {
+            _Head = null;
+        }
+
+        public List<Coordinate> Coordinates
+        {
+            get => _Coordinate!;
+            set => _Coordinate = value;
+        }
+
+        public void ClearCoordinates()
+        {
+            _Coordinate?.Clear();
+        }
+
+        public bool CanBeUsed()
+        {
+            bool isValid = true;
+            isValid &= (_IdBoat != null) && (_Size != null) && (_MaterialType != null) && (_Head != null) && (_Coordinate != null);
+            return isValid;
+        }
+
+        public void Clear()
         {
             ClearIdBoat();
+            ClearMaterialType();
+            ClearSize();
+            ClearHead();
+            ClearCoordinates();
+        }
+
+        internal bool GetIsSizeChose()
+        {
+            return _Size != null;
+        }
+
+        internal bool GetIsTypeChose()
+        {
+            return _MaterialType != null;
+        }
+
+        internal bool GetHeadChose()
+        {
+            return _Head != null;
         }
     }
 }
