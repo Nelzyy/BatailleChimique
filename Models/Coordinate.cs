@@ -24,5 +24,23 @@ namespace BatailleChimiqueWinform.Models
 
         public int X => _X;
         public int Y => _Y;
+
+        public static bool operator ==(Coordinate First, Coordinate Second)
+        {
+            if (First is null && Second is null)
+            {
+                return true;
+            }
+            if (First is null || Second is null)
+            {
+                return false;
+            }
+            return First._X == Second._X && First._Y == Second._Y;
+        }
+
+        public static bool operator !=(Coordinate First, Coordinate Second)
+        {
+            return !(First == Second);
+        }
     }
 }

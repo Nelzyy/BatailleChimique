@@ -7,18 +7,20 @@ public class MainController
 {
     private ChoseBoatScreen _ChoseBoatScreen;
     private Game _Game;
-    private BoatPlacementPaquet _Paquet;
+    private BoatPlacementPaquet _CurrentPaquet;
     private bool _ExtremityMode;
     private bool _IsVerticalPlacement;
     private int _NbRotate;
+    private List<BoatPlacementPaquet> _PaquetPlaced;
     public MainController()
     {
         this._ChoseBoatScreen = new(this);
         this._Game = new();
-        this._Paquet = new();
+        this._CurrentPaquet = new();
         this._ExtremityMode = true;
         this._IsVerticalPlacement = true;
         this._NbRotate = 0;
+        this._PaquetPlaced = new();
     }
     public void ShowChoseBoatScreen()
     {
@@ -28,24 +30,24 @@ public class MainController
 
     public void ChoseBoatSize(int boatSizeChosen)
     {
-        if (_Paquet.GetIsSizeChose())
+        if (_CurrentPaquet.GetIsSizeChose())
         {
-            _Paquet.ClearSize();
+            _CurrentPaquet.ClearSize();
             return;
         }
         switch (boatSizeChosen)
         {
             case 2:
-                _Paquet.Size = SizeBoat.tiny;
+                _CurrentPaquet.Size = SizeBoat.tiny;
                 break;
             case 3:
-                _Paquet.Size = SizeBoat.tinyMiddle;
+                _CurrentPaquet.Size = SizeBoat.tinyMiddle;
                 break;
             case 4:
-                _Paquet.Size = SizeBoat.bigMiddle;
+                _CurrentPaquet.Size = SizeBoat.bigMiddle;
                 break;
             case 5:
-                _Paquet.Size = SizeBoat.big;
+                _CurrentPaquet.Size = SizeBoat.big;
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -53,21 +55,21 @@ public class MainController
     }
     public void ChoseBoatType(string boatTypeChosen)
     {
-        if (_Paquet.GetIsTypeChose())
+        if (_CurrentPaquet.GetIsTypeChose())
         {
-            _Paquet.ClearMaterialType();
+            _CurrentPaquet.ClearMaterialType();
             return;
         }
         switch (boatTypeChosen)
         {
             case "Cuivrassé":
-                _Paquet.MaterialType = MaterialType.Cuivre;
+                _CurrentPaquet.MaterialType = MaterialType.Cuivre;
                 break;
             case "Ferox":
-                _Paquet.MaterialType = MaterialType.Fer;
+                _CurrentPaquet.MaterialType = MaterialType.Fer;
                 break;
             case "Zinctor":
-                _Paquet.MaterialType = MaterialType.Zinc;
+                _CurrentPaquet.MaterialType = MaterialType.Zinc;
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -89,7 +91,7 @@ public class MainController
 
     private void CheckAndRotate()
     {
-        if (_Paquet.GetHeadChose())
+        if (_CurrentPaquet.GetHeadChose() && GetCanPlaced())
         {
             UpdatePreviewBoatCoordinate();
         }
@@ -98,18 +100,18 @@ public class MainController
 
     public void ClearPaquet()
     {
-        _Paquet.Clear();
+        _CurrentPaquet.Clear();
     }
 
 
     public void ChoseCase(Coordinate coord)
     {
-        if (!_Paquet.GetIsTypeChose() || !_Paquet.GetIsSizeChose())
+        if (!_CurrentPaquet.GetIsTypeChose() || !_CurrentPaquet.GetIsSizeChose())
         {
             MessageBox.Show("Veuillez choisir le type et la taille du bateau avant de le placer.");
             return;
         }
-        _Paquet.Head = coord;
+        _CurrentPaquet.Head = coord;
         UpdatePreviewBoatCoordinate();
     }
 
@@ -152,6 +154,7 @@ public class MainController
                     break;
             }
         }
+        _CurrentPaquet.Coordinates = coordinates;
         return coordinates;
     }
 
@@ -159,7 +162,7 @@ public class MainController
     {
         for (int Index = 0; Index < size; Index++)
         {
-            coordinates.Add(new Coordinate(_Paquet.Head.X, _Paquet.Head.Y + Index));
+            coordinates.Add(new Coordinate(_CurrentPaquet.Head.X, _CurrentPaquet.Head.Y + Index));
         }
     }
 
@@ -167,7 +170,7 @@ public class MainController
     {
         for (int Index = 0; Index < size; Index++)
         {
-            coordinates.Add(new Coordinate(_Paquet.Head.X - Index, _Paquet.Head.Y));
+            coordinates.Add(new Coordinate(_CurrentPaquet.Head.X - Index, _CurrentPaquet.Head.Y));
         }
     }
 
@@ -175,7 +178,7 @@ public class MainController
     {
         for (int Index = 0; Index < size; Index++)
         {
-            coordinates.Add(new Coordinate(_Paquet.Head.X, _Paquet.Head.Y - Index));
+            coordinates.Add(new Coordinate(_CurrentPaquet.Head.X, _CurrentPaquet.Head.Y - Index));
         }
     }
 
@@ -183,7 +186,7 @@ public class MainController
     {
         for (int Index = 0; Index < size; Index++)
         {
-            coordinates.Add(new Coordinate(_Paquet.Head.X + Index, _Paquet.Head.Y));
+            coordinates.Add(new Coordinate(_CurrentPaquet.Head.X + Index, _CurrentPaquet.Head.Y));
         }
     }
 
@@ -191,7 +194,7 @@ public class MainController
     {
         for (int Index = -(size / 2); Index < Math.Ceiling((float)size / 2); Index++)
         {
-            coordinates.Add(new Coordinate(_Paquet.Head.X + Index, _Paquet.Head.Y));
+            coordinates.Add(new Coordinate(_CurrentPaquet.Head.X + Index, _CurrentPaquet.Head.Y));
         }
     }
 
@@ -199,13 +202,13 @@ public class MainController
     {
         for (int Index = -(size / 2); Index < Math.Ceiling((float)size / 2); Index++)
         {
-            coordinates.Add(new Coordinate(_Paquet.Head.X, _Paquet.Head.Y + Index));
+            coordinates.Add(new Coordinate(_CurrentPaquet.Head.X, _CurrentPaquet.Head.Y + Index));
         }
     }
 
     private int GetSize()
     {
-        switch (_Paquet.Size)
+        switch (_CurrentPaquet.Size)
         {
             case SizeBoat.tiny:
                 return 2;
@@ -220,18 +223,51 @@ public class MainController
         }
     }
 
-    public bool GetCanChose()
+    public bool GetIsPreviewPlaced()
     {
-        return _Paquet.GetIsTypeChose() && _Paquet.GetIsSizeChose();
+        return _CurrentPaquet.GetIsPlacementValid(_PaquetPlaced);
+    }
+    public bool GetCanPlaced()
+    {
+        return GetTypeChose() && GetSizeChose();
     }
 
     public bool GetSizeChose()
     {
-        return _Paquet.GetIsSizeChose();
+        return _CurrentPaquet.GetIsSizeChose();
     }
 
     public bool GetTypeChose()
     {
-        return _Paquet.GetIsTypeChose();
+        return _CurrentPaquet.GetIsTypeChose();
+    }
+
+    public void ValidateBoatPlacement(int id)
+    {
+        _CurrentPaquet.IdBoat = _PaquetPlaced.Count + 1;
+        if (_CurrentPaquet.CanBeUsed())
+        {
+            if (_CurrentPaquet.GetIsPlacementValid(_PaquetPlaced))
+            {
+                _PaquetPlaced.Add(_CurrentPaquet);
+                _CurrentPaquet = new();
+            }
+            else
+            {
+                MessageBox.Show("Placement impossible");
+            }
+        }
+        else
+        {
+            MessageBox.Show("Veuillez choisir le type, la taille et l'extrémité du bateau avant de le placer.");
+        }
+        ShowGrid();
+        _ChoseBoatScreen.Clean();
+        _ChoseBoatScreen.DisableSizeButtonById(id);
+    }
+
+    public void ShowGrid()
+    {
+        _ChoseBoatScreen.ShowGrid(_PaquetPlaced);
     }
 }

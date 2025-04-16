@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BatailleChimiqueWinform.Models;
-enum MaterialType
+public enum MaterialType
 {
     Cuivre,
     Fer,
     Zinc
 }
-enum SizeBoat
+public enum SizeBoat
 {
     tiny,
     tinyMiddle,

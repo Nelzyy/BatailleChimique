@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BatailleChimiqueWinform.Models
 {
-    class BoatPlacementPaquet
+    public class BoatPlacementPaquet
     {
         private int? _IdBoat;
         private MaterialType? _MaterialType;
@@ -91,19 +91,48 @@ namespace BatailleChimiqueWinform.Models
             ClearCoordinates();
         }
 
-        internal bool GetIsSizeChose()
+        public bool GetIsSizeChose()
         {
             return _Size != null;
         }
 
-        internal bool GetIsTypeChose()
+        public bool GetIsTypeChose()
         {
             return _MaterialType != null;
         }
 
-        internal bool GetHeadChose()
+        public bool GetHeadChose()
         {
             return _Head != null;
+        }
+
+        public bool GetIsPlacementValid(List<BoatPlacementPaquet> paquetPlaced)
+        {
+            foreach (Coordinate coord in _Coordinate!)
+            {
+                bool isCoordinateValid = coord.X >= 0 &&
+                                         coord.Y >= 0 &&
+                                         coord.X < Board._BoardSize &&
+                                         coord.Y < Board._BoardSize;
+                if (!isCoordinateValid)
+                {
+                    return false;
+                }
+            }
+            foreach (BoatPlacementPaquet paquet in paquetPlaced)
+            {
+                foreach (Coordinate coord in paquet.Coordinates)
+                {
+                    foreach (Coordinate coord2 in _Coordinate!)
+                    {
+                        if (coord == coord2)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
         }
     }
 }

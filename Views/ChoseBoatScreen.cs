@@ -5,6 +5,7 @@ namespace BatailleChimiqueWinform;
 public partial class ChoseBoatScreen : Form
 {
     private const int GridSize = 8;
+    private int nbBoatPlaced = 0;
     private MainController _Controller;
     private Button[,] _ChosenMatrix;
 
@@ -25,7 +26,7 @@ public partial class ChoseBoatScreen : Form
         if (this._Controller.GetSizeChose())
         {
             CleanEditPreviewButton();
-            CleanGrid();
+            this._Controller.ShowGrid();
         }
         else
         {
@@ -41,7 +42,7 @@ public partial class ChoseBoatScreen : Form
         if (_Controller.GetTypeChose())
         {
             CleanChoseTypePanel();
-            CleanGrid();
+            this._Controller.ShowGrid();
         }
         else
         {
@@ -96,9 +97,8 @@ public partial class ChoseBoatScreen : Form
     private void CancelButton_Click(object sender, EventArgs e)
     {
         this._Controller.ClearPaquet();
-        CleanChoseTypePanel();
-        CleanEditPreviewButton();
-        CleanGrid();
+        Clean();
+        this._Controller.ShowGrid();
     }
 
 
@@ -139,25 +139,23 @@ public partial class ChoseBoatScreen : Form
 
     public void UpdateGrid(List<Coordinate> coordinatesCalculated)
     {
-        CleanGrid();
+        this._Controller.ShowGrid();
+        bool valid = this._Controller.GetIsPreviewPlaced();
 
         Color color = Color.FromArgb(120, 120, 120);
-        foreach (Coordinate coordinate in coordinatesCalculated)
+
+        if (!valid)
         {
-            int x = coordinate.X;
-            int y = coordinate.Y;
-            if (x < 0 || x >= GridSize || y < 0 || y >= GridSize)
-            {
-                color = Color.FromArgb(247, 73, 73);
-                break;
-            }
+            color = Color.FromArgb(247, 73, 73);
         }
 
         foreach (Coordinate coordinate in coordinatesCalculated)
         {
             int x = coordinate.X;
             int y = coordinate.Y;
-            if (x < 0 || x >= GridSize || y < 0 || y >= GridSize)
+            if (x < 0 || x >= GridSize || y < 0 || y >= GridSize ||
+                (_ChosenMatrix[x, y].BackColor != Color.FromArgb(50, 50, 50) &&
+                _ChosenMatrix[x, y].BackColor != Color.FromArgb(70, 70, 70)))
             {
                 continue;
             }
@@ -176,6 +174,31 @@ public partial class ChoseBoatScreen : Form
                 PutColorInCase(YCoordinate, XCoordinate, button);
             }
         }
+    }
+
+    private void ValidateButton_Click(object sender, EventArgs e)
+    {
+        if (!this._Controller.GetIsPreviewPlaced())
+        {
+            return;
+        }
+        nbBoatPlaced++;
+        UpdateNbBoatPlacedLabel();
+        int id = 0;
+        foreach (Control control in MainPanel.Controls)
+        {
+            if (control.BackColor == Color.FromArgb(70, 70, 70))
+            {
+                id = control.TabIndex;
+                this._Controller.ValidateBoatPlacement(id);
+                break;
+            }
+        }
+    }
+
+    private void UpdateNbBoatPlacedLabel()
+    {
+        NbBoatPlacedLabel.Text = "Nombre de bateau placé : " + nbBoatPlaced;
     }
 
     private void InitializeBoard()
@@ -201,5 +224,52 @@ public partial class ChoseBoatScreen : Form
             }
         }
         ResumeLayout();
+    }
+
+    public void ShowGrid(List<BoatPlacementPaquet> paquetPlaced)
+    {
+        CleanGrid();
+        foreach (BoatPlacementPaquet paquet in paquetPlaced)
+        {
+            Color color;
+            switch (paquet.MaterialType)
+            {
+                case MaterialType.Zinc:
+                    color = Color.FromArgb(73, 226, 247);
+                    break;
+                case MaterialType.Cuivre:
+                    color = Color.FromArgb(247, 237, 73);
+                    break;
+                case MaterialType.Fer:
+                    color = Color.FromArgb(73, 247, 97);
+                    break;
+                default:
+                    color = Color.FromArgb(120, 120, 120);
+                    break;
+            }
+            foreach (Coordinate coordinate in paquet.Coordinates)
+            {
+                Button button = _ChosenMatrix[coordinate.X, coordinate.Y];
+                button.BackColor = color;
+            }
+        }
+    }
+
+    public void Clean()
+    {
+        CleanChoseTypePanel();
+        CleanEditPreviewButton();
+    }
+
+    public void DisableSizeButtonById(int id)
+    {
+        foreach (Control control in MainPanel.Controls)
+        {
+            if (control is Button button && button.TabIndex == id)
+            {
+                button.BackColor = Color.FromArgb(30, 30, 30);
+                button.Enabled = false;
+            }
+        }
     }
 }
