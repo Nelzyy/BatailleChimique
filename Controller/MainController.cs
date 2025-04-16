@@ -6,21 +6,24 @@ using BatailleChimiqueWinform.Models;
 public class MainController
 {
     private ChoseBoatScreen _ChoseBoatScreen;
-    private Game _Game;
+    private Player _Player;
     private BoatPlacementPaquet _CurrentPaquet;
     private bool _ExtremityMode;
     private bool _IsVerticalPlacement;
     private int _NbRotate;
     private List<BoatPlacementPaquet> _PaquetPlaced;
+    private bool _DeletePaquet;
+    public List<int> _IdDisable;
     public MainController()
     {
         this._ChoseBoatScreen = new(this);
-        this._Game = new();
+        this._Player = new();
         this._CurrentPaquet = new();
         this._ExtremityMode = true;
         this._IsVerticalPlacement = true;
         this._NbRotate = 0;
         this._PaquetPlaced = new();
+        this._IdDisable = new();
     }
     public void ShowChoseBoatScreen()
     {
@@ -106,6 +109,11 @@ public class MainController
 
     public void ChoseCase(Coordinate coord)
     {
+        if (_DeletePaquet)
+        {
+            FindAndDeleteGoodPaquet(coord);
+            return;
+        }
         if (!_CurrentPaquet.GetIsTypeChose() || !_CurrentPaquet.GetIsSizeChose())
         {
             MessageBox.Show("Veuillez choisir le type et la taille du bateau avant de le placer.");
@@ -113,6 +121,26 @@ public class MainController
         }
         _CurrentPaquet.Head = coord;
         UpdatePreviewBoatCoordinate();
+    }
+
+    private void FindAndDeleteGoodPaquet(Coordinate coordSelect)
+    {
+        foreach (BoatPlacementPaquet paquet in _PaquetPlaced)
+        {
+            foreach (Coordinate coord in paquet.Coordinates)
+            {
+                if (coord == coordSelect)
+                {
+                    _DeletePaquet = false;
+                    _PaquetPlaced.Remove(paquet);
+                    ShowGrid();
+                    enableButtonID(paquet.IdTemp);
+                    _ChoseBoatScreen.UpdateNbBoatPlacedLabel(_PaquetPlaced.Count);
+                    _ChoseBoatScreen.Clean();
+                    return;
+                }
+            }
+        }
     }
 
     private void UpdatePreviewBoatCoordinate()
@@ -245,6 +273,7 @@ public class MainController
     public void ValidateBoatPlacement(int id)
     {
         _CurrentPaquet.IdBoat = _PaquetPlaced.Count + 1;
+        _CurrentPaquet.IdTemp = id;
         if (_CurrentPaquet.CanBeUsed())
         {
             if (_CurrentPaquet.GetIsPlacementValid(_PaquetPlaced))
@@ -264,10 +293,37 @@ public class MainController
         ShowGrid();
         _ChoseBoatScreen.Clean();
         _ChoseBoatScreen.DisableSizeButtonById(id);
+        _ChoseBoatScreen.UpdateNbBoatPlacedLabel(_PaquetPlaced.Count);
+        _IdDisable.Add(id);
     }
 
     public void ShowGrid()
     {
         _ChoseBoatScreen.ShowGrid(_PaquetPlaced);
+    }
+
+    public void SetDelete()
+    {
+        if (_PaquetPlaced.Count <= 0)
+        {
+            return;
+        }
+        _DeletePaquet = true;
+        this._ChoseBoatScreen.SayDeleteUp();
+    }
+
+    private void enableButtonID(int id)
+    {
+        this._ChoseBoatScreen.EnableSizeButton(id);
+    }
+
+    public void SetValidate()
+    {
+        foreach (BoatPlacementPaquet paquet in _PaquetPlaced)
+        {
+            _Player.FillBoat(paquet);
+        }
+        this._ChoseBoatScreen.SayReady();
+        MessageBox.Show("Bateaux placés");
     }
 }

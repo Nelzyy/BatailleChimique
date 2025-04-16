@@ -5,7 +5,6 @@ namespace BatailleChimiqueWinform;
 public partial class ChoseBoatScreen : Form
 {
     private const int GridSize = 8;
-    private int nbBoatPlaced = 0;
     private MainController _Controller;
     private Button[,] _ChosenMatrix;
 
@@ -182,8 +181,11 @@ public partial class ChoseBoatScreen : Form
         {
             return;
         }
-        nbBoatPlaced++;
-        UpdateNbBoatPlacedLabel();
+        if (NbBoatPlacedLabel.Text == "Nombre de bateau placé : 5")
+        {
+            this._Controller.SetValidate();
+            return;
+        }
         int id = 0;
         foreach (Control control in MainPanel.Controls)
         {
@@ -196,9 +198,17 @@ public partial class ChoseBoatScreen : Form
         }
     }
 
-    private void UpdateNbBoatPlacedLabel()
+    public void UpdateNbBoatPlacedLabel(int nbBoatPlaced)
     {
         NbBoatPlacedLabel.Text = "Nombre de bateau placé : " + nbBoatPlaced;
+        if (nbBoatPlaced == 5)
+        {
+            ValidateButton.Text = "Valider la selection";
+        }
+        else
+        {
+            ValidateButton.Text = "Valider";
+        }
     }
 
     private void InitializeBoard()
@@ -263,13 +273,44 @@ public partial class ChoseBoatScreen : Form
 
     public void DisableSizeButtonById(int id)
     {
+        Button button = GetButtonSizeById(id);
+        button.Enabled = false;
+    }
+
+    public void DeleteButton_Click(object sender, EventArgs e)
+    {
+        this._Controller.SetDelete();
+    }
+
+    public void SayDeleteUp()
+    {
+        MessageBox.Show("Veuillez choisir un bateau à supprimer.");
+    }
+
+    public void EnableSizeButton(int id)
+    {
+        Button button = GetButtonSizeById(id);
+        button.Enabled = true;
+    }
+
+    private Button GetButtonSizeById(int id)
+    {
         foreach (Control control in MainPanel.Controls)
         {
             if (control is Button button && button.TabIndex == id)
             {
-                button.BackColor = Color.FromArgb(30, 30, 30);
-                button.Enabled = false;
+                return button;
             }
+        }
+        throw new InvalidOperationException("Cant get a button with this id");
+    }
+
+    public void SayReady()
+    {
+        ReadyLabel.Visible = true;
+        foreach (Control control in MainPanel.Controls)
+        {
+            control.Enabled = false;
         }
     }
 }

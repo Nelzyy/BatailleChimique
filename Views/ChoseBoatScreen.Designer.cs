@@ -43,18 +43,19 @@
             ValidateButton = new Button();
             DeleteButton = new Button();
             CuivrasséPanel = new Panel();
+            cuivrassélabel2 = new Label();
+            cuivrassélabel1 = new Label();
             CuivrasséLabel = new Label();
             FeroxPanel = new Panel();
+            feroxlabel2 = new Label();
+            feroxlabel1 = new Label();
             Ferox = new Label();
             ZinctorPanel = new Panel();
+            zinctorlabel2 = new Label();
+            LabelZinctor1 = new Label();
             ZinctorLabel = new Label();
             NbBoatPlacedLabel = new Label();
-            LabelZinctor1 = new Label();
-            zinctorlabel2 = new Label();
-            feroxlabel1 = new Label();
-            feroxlabel2 = new Label();
-            cuivrassélabel1 = new Label();
-            cuivrassélabel2 = new Label();
+            ReadyLabel = new Label();
             TitlePanel.SuspendLayout();
             MainPanel.SuspendLayout();
             CuivrasséPanel.SuspendLayout();
@@ -272,6 +273,7 @@
             DeleteButton.TabIndex = 0;
             DeleteButton.Text = "Supprimer";
             DeleteButton.UseVisualStyleBackColor = false;
+            DeleteButton.Click += DeleteButton_Click;
             // 
             // CuivrasséPanel
             // 
@@ -286,6 +288,28 @@
             CuivrasséPanel.Size = new Size(182, 320);
             CuivrasséPanel.TabIndex = 12;
             CuivrasséPanel.Click += ChoseTypeBoat_Click;
+            // 
+            // cuivrassélabel2
+            // 
+            cuivrassélabel2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            cuivrassélabel2.AutoSize = true;
+            cuivrassélabel2.ForeColor = Color.White;
+            cuivrassélabel2.Location = new Point(10, 250);
+            cuivrassélabel2.Name = "cuivrassélabel2";
+            cuivrassélabel2.Size = new Size(107, 15);
+            cuivrassélabel2.TabIndex = 2;
+            cuivrassélabel2.Text = "Faible contre Ferox";
+            // 
+            // cuivrassélabel1
+            // 
+            cuivrassélabel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            cuivrassélabel1.AutoSize = true;
+            cuivrassélabel1.ForeColor = Color.White;
+            cuivrassélabel1.Location = new Point(10, 200);
+            cuivrassélabel1.Name = "cuivrassélabel1";
+            cuivrassélabel1.Size = new Size(159, 15);
+            cuivrassélabel1.TabIndex = 1;
+            cuivrassélabel1.Text = "Super efficace contre Zinctor";
             // 
             // CuivrasséLabel
             // 
@@ -313,6 +337,28 @@
             FeroxPanel.TabIndex = 11;
             FeroxPanel.Click += ChoseTypeBoat_Click;
             // 
+            // feroxlabel2
+            // 
+            feroxlabel2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            feroxlabel2.AutoSize = true;
+            feroxlabel2.ForeColor = Color.White;
+            feroxlabel2.Location = new Point(10, 250);
+            feroxlabel2.Name = "feroxlabel2";
+            feroxlabel2.Size = new Size(116, 15);
+            feroxlabel2.TabIndex = 2;
+            feroxlabel2.Text = "Faible contre Zinctor";
+            // 
+            // feroxlabel1
+            // 
+            feroxlabel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            feroxlabel1.AutoSize = true;
+            feroxlabel1.ForeColor = Color.White;
+            feroxlabel1.Location = new Point(10, 200);
+            feroxlabel1.Name = "feroxlabel1";
+            feroxlabel1.Size = new Size(171, 15);
+            feroxlabel1.TabIndex = 1;
+            feroxlabel1.Text = "Super efficace contre Cuivrassé";
+            // 
             // Ferox
             // 
             Ferox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -339,6 +385,28 @@
             ZinctorPanel.TabIndex = 10;
             ZinctorPanel.Click += ChoseTypeBoat_Click;
             // 
+            // zinctorlabel2
+            // 
+            zinctorlabel2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            zinctorlabel2.AutoSize = true;
+            zinctorlabel2.ForeColor = Color.White;
+            zinctorlabel2.Location = new Point(10, 250);
+            zinctorlabel2.Name = "zinctorlabel2";
+            zinctorlabel2.Size = new Size(128, 15);
+            zinctorlabel2.TabIndex = 2;
+            zinctorlabel2.Text = "Faible contre Cuivrassé";
+            // 
+            // LabelZinctor1
+            // 
+            LabelZinctor1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            LabelZinctor1.AutoSize = true;
+            LabelZinctor1.ForeColor = Color.White;
+            LabelZinctor1.Location = new Point(10, 200);
+            LabelZinctor1.Name = "LabelZinctor1";
+            LabelZinctor1.Size = new Size(150, 15);
+            LabelZinctor1.TabIndex = 1;
+            LabelZinctor1.Text = "Super efficace contre Ferox";
+            // 
             // ZinctorLabel
             // 
             ZinctorLabel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
@@ -362,71 +430,17 @@
             NbBoatPlacedLabel.TabIndex = 3;
             NbBoatPlacedLabel.Text = "Nombre de bateau placé : 0";
             // 
-            // LabelZinctor1
+            // ReadyLabel
             // 
-            LabelZinctor1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            LabelZinctor1.AutoSize = true;
-            LabelZinctor1.ForeColor = Color.White;
-            LabelZinctor1.Location = new Point(10, 200);
-            LabelZinctor1.Name = "LabelZinctor1";
-            LabelZinctor1.Size = new Size(150, 15);
-            LabelZinctor1.TabIndex = 1;
-            LabelZinctor1.Text = "Super efficace contre Ferox";
-            // 
-            // zinctorlabel2
-            // 
-            zinctorlabel2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            zinctorlabel2.AutoSize = true;
-            zinctorlabel2.ForeColor = Color.White;
-            zinctorlabel2.Location = new Point(10, 250);
-            zinctorlabel2.Name = "zinctorlabel2";
-            zinctorlabel2.Size = new Size(128, 15);
-            zinctorlabel2.TabIndex = 2;
-            zinctorlabel2.Text = "Faible contre Cuivrassé";
-            // 
-            // feroxlabel1
-            // 
-            feroxlabel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            feroxlabel1.AutoSize = true;
-            feroxlabel1.ForeColor = Color.White;
-            feroxlabel1.Location = new Point(10, 200);
-            feroxlabel1.Name = "feroxlabel1";
-            feroxlabel1.Size = new Size(171, 15);
-            feroxlabel1.TabIndex = 1;
-            feroxlabel1.Text = "Super efficace contre Cuivrassé";
-            // 
-            // feroxlabel2
-            // 
-            feroxlabel2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            feroxlabel2.AutoSize = true;
-            feroxlabel2.ForeColor = Color.White;
-            feroxlabel2.Location = new Point(10, 250);
-            feroxlabel2.Name = "feroxlabel2";
-            feroxlabel2.Size = new Size(116, 15);
-            feroxlabel2.TabIndex = 2;
-            feroxlabel2.Text = "Faible contre Zinctor";
-            // 
-            // cuivrassélabel1
-            // 
-            cuivrassélabel1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            cuivrassélabel1.AutoSize = true;
-            cuivrassélabel1.ForeColor = Color.White;
-            cuivrassélabel1.Location = new Point(10, 200);
-            cuivrassélabel1.Name = "cuivrassélabel1";
-            cuivrassélabel1.Size = new Size(159, 15);
-            cuivrassélabel1.TabIndex = 1;
-            cuivrassélabel1.Text = "Super efficace contre Zinctor";
-            // 
-            // cuivrassélabel2
-            // 
-            cuivrassélabel2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            cuivrassélabel2.AutoSize = true;
-            cuivrassélabel2.ForeColor = Color.White;
-            cuivrassélabel2.Location = new Point(10, 250);
-            cuivrassélabel2.Name = "cuivrassélabel2";
-            cuivrassélabel2.Size = new Size(107, 15);
-            cuivrassélabel2.TabIndex = 2;
-            cuivrassélabel2.Text = "Faible contre Ferox";
+            ReadyLabel.AutoSize = true;
+            ReadyLabel.Font = new Font("Sitka Small", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            ReadyLabel.ForeColor = Color.White;
+            ReadyLabel.Location = new Point(12, 97);
+            ReadyLabel.Name = "ReadyLabel";
+            ReadyLabel.Size = new Size(202, 18);
+            ReadyLabel.TabIndex = 4;
+            ReadyLabel.Text = "Prêt. Attente de l'autre joueur.";
+            ReadyLabel.Visible = false;
             // 
             // ChoseBoatScreen
             // 
@@ -434,6 +448,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(40, 40, 40);
             ClientSize = new Size(1184, 761);
+            Controls.Add(ReadyLabel);
             Controls.Add(NbBoatPlacedLabel);
             Controls.Add(MainPanel);
             Controls.Add(TabPanel);
@@ -483,5 +498,6 @@
         private Label feroxlabel1;
         private Label zinctorlabel2;
         private Label LabelZinctor1;
+        private Label ReadyLabel;
     }
 }

@@ -69,6 +69,7 @@ namespace BatailleChimiqueWinform.Models
             get => _Coordinate!;
             set => _Coordinate = value;
         }
+        public int IdTemp { get; set; }
 
         public void ClearCoordinates()
         {
