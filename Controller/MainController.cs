@@ -2,6 +2,8 @@
 
 using System.Windows.Forms;
 using BatailleChimiqueWinform.Models;
+using BatailleChimiqueWinform.Views;
+using Socket_client;
 
 public class MainController
 {
@@ -13,7 +15,9 @@ public class MainController
     private int _NbRotate;
     private List<BoatPlacementPaquet> _PaquetPlaced;
     private bool _DeletePaquet;
-    public List<int> _IdDisable;
+    private List<int> _IdDisable;
+    private Client _Client;
+    private IpAsk _IpAskScreen;
     public MainController()
     {
         this._ChoseBoatScreen = new(this);
@@ -24,6 +28,13 @@ public class MainController
         this._NbRotate = 0;
         this._PaquetPlaced = new();
         this._IdDisable = new();
+        this._Client = new Client();
+        this._IpAskScreen = new(this);
+    }
+
+    public async Task LaunchCLientAsync()
+    {
+        _IpAskScreen.ShowDialog();
     }
     public void ShowChoseBoatScreen()
     {
@@ -325,5 +336,11 @@ public class MainController
         }
         this._ChoseBoatScreen.SayReady();
         MessageBox.Show("Bateaux placés");
+    }
+
+    public void SetIp(byte[] ipAddressByte)
+    {
+        _IpAskScreen.Close();
+        _Client.Start(ipAddressByte);
     }
 }

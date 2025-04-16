@@ -313,4 +313,9 @@ public partial class ChoseBoatScreen : Form
             control.Enabled = false;
         }
     }
+
+    private void ConnectClientButton_Click(object sender, EventArgs e)
+    {
+        this._Controller.LaunchCLientAsync();
+    }
 }

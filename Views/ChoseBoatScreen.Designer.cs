@@ -56,6 +56,7 @@
             ZinctorLabel = new Label();
             NbBoatPlacedLabel = new Label();
             ReadyLabel = new Label();
+            ConnectClientButton = new Button();
             TitlePanel.SuspendLayout();
             MainPanel.SuspendLayout();
             CuivrasséPanel.SuspendLayout();
@@ -96,6 +97,7 @@
             // MainPanel
             // 
             MainPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            MainPanel.Controls.Add(ConnectClientButton);
             MainPanel.Controls.Add(FiveCaseButton);
             MainPanel.Controls.Add(FourCaseButton);
             MainPanel.Controls.Add(ThreeCaseButton2);
@@ -442,6 +444,20 @@
             ReadyLabel.Text = "Prêt. Attente de l'autre joueur.";
             ReadyLabel.Visible = false;
             // 
+            // ConnectClientButton
+            // 
+            ConnectClientButton.BackColor = Color.FromArgb(30, 30, 30);
+            ConnectClientButton.FlatStyle = FlatStyle.Popup;
+            ConnectClientButton.Font = new Font("Sitka Small", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            ConnectClientButton.ForeColor = Color.White;
+            ConnectClientButton.Location = new Point(232, 639);
+            ConnectClientButton.Name = "ConnectClientButton";
+            ConnectClientButton.Size = new Size(182, 36);
+            ConnectClientButton.TabIndex = 13;
+            ConnectClientButton.Text = "Connecter le Client";
+            ConnectClientButton.UseVisualStyleBackColor = false;
+            ConnectClientButton.Click += ConnectClientButton_Click;
+            // 
             // ChoseBoatScreen
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -499,5 +515,6 @@
         private Label zinctorlabel2;
         private Label LabelZinctor1;
         private Label ReadyLabel;
+        private Button ConnectClientButton;
     }
 }
