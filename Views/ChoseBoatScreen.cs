@@ -130,7 +130,7 @@ public partial class ChoseBoatScreen : Form
         _Controller.ChoseCase(coordinate);
     }
 
-    private static void GetButtonCoordinate(Button button, out int x, out int y)
+    public static void GetButtonCoordinate(Button button, out int x, out int y)
     {
         x = (button.Location.Y - 50) / 50;
         y = (button.Location.X - 50) / 50;

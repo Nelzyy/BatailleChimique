@@ -7,6 +7,7 @@ using Socket_client;
 
 public class MainController
 {
+    private gameScreen _gameScreen;
     private ChoseBoatScreen _ChoseBoatScreen;
     private Player _Player;
     private BoatPlacementPaquet _CurrentPaquet;
@@ -31,6 +32,8 @@ public class MainController
         this._Client = new Client();
         this._IpAskScreen = new(this);
     }
+
+    #region code ethanol
 
     public async Task LaunchCLientAsync()
     {
@@ -335,7 +338,11 @@ public class MainController
             _Player.FillBoat(paquet);
         }
         this._ChoseBoatScreen.SayReady();
-        MessageBox.Show("Bateaux placés");
+        this._ChoseBoatScreen.Hide();
+        this._gameScreen = new(this);
+        _gameScreen.LoadBoatsOnGrid(_PaquetPlaced);
+        this._gameScreen.Show();
+       
     }
 
     public void SetIp(byte[] ipAddressByte)
@@ -343,4 +350,29 @@ public class MainController
         _IpAskScreen.Close();
         _Client.Start(ipAddressByte);
     }
+
+    #endregion
+
+    #region code laiton
+    public bool HandleAttack(Coordinate target)
+    {
+        for (int i = 0; i < _PaquetPlaced.Count; i++)
+        {
+            BoatPlacementPaquet boat = _PaquetPlaced[i];
+            for (int j = 0; j < boat.Coordinates.Count; j++)
+            {
+                Coordinate coord = boat.Coordinates[j];
+                if (coord.X == target.X && coord.Y == target.Y)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    #endregion 
+
+
+
 }
