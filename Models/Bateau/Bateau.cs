@@ -36,6 +36,11 @@ class Bateau
         _Coordinate = coords;
     }
 
+    public MaterialType Type
+    {
+        get => _Type;
+    }
+
     public List<Coordinate> Coordinates
     {
         get => _Coordinate;

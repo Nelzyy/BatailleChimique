@@ -352,18 +352,18 @@ public class MainController : ChoseBoatScreen.Ilistener
 
     }
 
-    public void SetIp(byte[] ipAddressByte)
+    public async Task SetIp(byte[] ipAddressByte)
     {
         _IpAskScreen.Close();
-        _Client.Start(ipAddressByte);
+        await _Client.Start(ipAddressByte);
         _IsConnected = true;
-        _Client.GetInitialMessage();
+        _Player.IsTurn = _Client.GetWriteMode();
     }
 
     #endregion
 
     #region code laiton
-    public bool HandleAttack(Coordinate target)
+    public async Task<bool> HandleAttack(Coordinate target)
     {
         //for (int i = 0; i < _PaquetPlaced.Count; i++)
         //{
@@ -381,10 +381,63 @@ public class MainController : ChoseBoatScreen.Ilistener
         /*
          envoyer au client une requete d'attaque avec client.sendAttack
          */
-        throw new NotImplementedException();
+        string result = await _Client.sendAttack(target);
+        return bool.Parse(result);
     }
 
-    #endregion 
+    public bool IsBoatAt(Coordinate coord)
+    {
+        Board myBoard = _Player.PlayerBoard;
+        CaseBoard targetedCase = myBoard.GetCase(coord.X, coord.Y);
+        if (!targetedCase.IsEmpty)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool GetPlayerTurn()
+    {
+        return _Player.IsTurn;
+    }
+
+    public async Task EndTurn()
+    {
+        await _Client.EndTurn();
+        _Player.SwapTurn();
+        Task.Run(() => _Client.listen());
+    }
+
+    public MaterialType GetBoatType(Coordinate coord)
+    {
+        Board myBoard = _Player.PlayerBoard;
+        CaseBoard targetedCase = myBoard.GetCase(coord.X, coord.Y);
+        if (!targetedCase.IsEmpty)
+        {
+            return targetedCase.GetBoatType();
+        }
+        throw new Exception("No boat in this case.");
+    }
+
+    public void SwapTurn()
+    {
+        _Player.SwapTurn();
+    }
+
+    public async Task Listen()
+    {
+        Task.Run(() => _Client.listen());
+    }
+
+    public void SetPlayerTurnMessage()
+    {
+        if (_gameScreen != null)
+        {
+            _gameScreen.SetPlayerTurnMessage();
+        }
+    }
+
+    #endregion
 
 
 

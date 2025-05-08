@@ -19,23 +19,76 @@ namespace BatailleChimiqueWinform.Views
         private Button[,] _OppennentMatrix;
 
         private MainController _Controller;
+        private bool _IsTypeChose;
+        private MaterialType? _type;
         public gameScreen(MainController controller)
         {
             InitializeComponent();
             _Controller = controller;
             _PersonnelMatrix = new Button[GridSize, GridSize];
             _OppennentMatrix = new Button[GridSize, GridSize];
+            _IsTypeChose = false;
+            _type = null;
             GenerateGrid(PersonalArea, _PersonnelMatrix);
             GenerateGrid(OppenentArea, _OppennentMatrix);
+            SetPlayerTurnMessage();
+            UpdateLabel.Visible = true;
+
+            if (!_Controller.GetPlayerTurn())
+            {
+                _Controller.Listen();
+                MessageBox.Show("C'est le tour de l'enemie");
+            }
         }
 
-        private void GridButton_Click(object sender, EventArgs e)
+        public void SetPlayerTurnMessage()
         {
+            UpdateLabel.Text = _Controller.GetPlayerTurn() ? "Ton tour" : "Tour de l'enemie";
+        }
+
+        private async void GridButton_Click(object sender, EventArgs e)
+        {
+            if (!_Controller.GetPlayerTurn())
+            {
+                return;
+            }
             Button clickedButton = (Button)sender;
             int x, y;
             GetButtonCoordinate(clickedButton, out x, out y);
             Coordinate target = new Coordinate(x, y);
-            bool hit = _Controller.HandleAttack(target);
+            if (clickedButton.Parent == PersonalArea)
+            {
+                ChoseAttackType(target);
+            }
+            if (clickedButton.Parent == OppenentArea)
+            {
+                if (_IsTypeChose)
+                {
+                    await ProcessAttack(clickedButton, target);
+                }
+            }
+        }
+
+        private void ChoseAttackType(Coordinate target)
+        {
+            if (_type == null)
+            {
+                if (_Controller.IsBoatAt(target))
+                {
+                    _type = _Controller.GetBoatType(target);
+                    _IsTypeChose = true;
+                }
+            }
+            else
+            {
+                _type = null;
+                _IsTypeChose = false;
+            }
+        }
+
+        private async Task ProcessAttack(Button clickedButton, Coordinate target)
+        {
+            bool hit = await _Controller.HandleAttack(target);
 
             if (hit)
             {
@@ -46,8 +99,9 @@ namespace BatailleChimiqueWinform.Views
                 clickedButton.BackColor = Color.FromArgb(200, 200, 200);
             }
             clickedButton.Enabled = false;
+            await _Controller.EndTurn();
+            SetPlayerTurnMessage();
         }
-
 
         public void GenerateGrid(Panel panel, Button[,] Matrix)
         {
@@ -62,7 +116,7 @@ namespace BatailleChimiqueWinform.Views
 
                     button.FlatStyle = FlatStyle.Flat;
                     button.Size = new Size(50, 50);
-                    button.Location = new Point(100+Xindex * 50, 100+Yindex * 50);
+                    button.Location = new Point(100 + Xindex * 50, 100 + Yindex * 50);
                     button.Text = "";
                     panel.Controls.Add(button);
                     button.Click += GridButton_Click;
@@ -108,8 +162,8 @@ namespace BatailleChimiqueWinform.Views
         }
         private void GetButtonCoordinate(Button button, out int x, out int y)
         {
-            x = button.Location.Y / 50;
-            y = button.Location.X / 50;
+            x = (button.Location.Y / 50) - 2;
+            y = (button.Location.X / 50) - 2;
         }
 
     }

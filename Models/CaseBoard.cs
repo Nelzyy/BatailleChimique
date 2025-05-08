@@ -43,5 +43,17 @@ namespace BatailleChimiqueWinform.Models
                 throw new Exception("Case is already occupied by another boat.");
             }
         }
+
+        public MaterialType GetBoatType()
+        {
+            if (this._Boat != null)
+            {
+                return this._Boat.Type;
+            }
+            else
+            {
+                throw new Exception("No boat in this case.");
+            }
+        }
     }
 }

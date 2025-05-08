@@ -30,21 +30,33 @@
         {
             PersonalArea = new Panel();
             OppenentArea = new Panel();
+            UpdateLabel = new Label();
             SuspendLayout();
             // 
             // PersonalArea
             // 
-            PersonalArea.Location = new Point(12, 36);
+            PersonalArea.Location = new Point(12, 136);
             PersonalArea.Name = "PersonalArea";
-            PersonalArea.Size = new Size(600, 600);
+            PersonalArea.Size = new Size(600, 500);
             PersonalArea.TabIndex = 0;
             // 
             // OppenentArea
             // 
-            OppenentArea.Location = new Point(660, 36);
+            OppenentArea.Location = new Point(660, 136);
             OppenentArea.Name = "OppenentArea";
-            OppenentArea.Size = new Size(600, 600);
+            OppenentArea.Size = new Size(600, 500);
             OppenentArea.TabIndex = 1;
+            // 
+            // UpdateLabel
+            // 
+            UpdateLabel.AutoSize = true;
+            UpdateLabel.Font = new Font("Sitka Small", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            UpdateLabel.ForeColor = Color.White;
+            UpdateLabel.Location = new Point(469, 67);
+            UpdateLabel.Name = "UpdateLabel";
+            UpdateLabel.Size = new Size(0, 31);
+            UpdateLabel.TabIndex = 2;
+            UpdateLabel.Visible = false;
             // 
             // gameScreen
             // 
@@ -52,16 +64,19 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(40, 40, 40);
             ClientSize = new Size(1284, 669);
+            Controls.Add(UpdateLabel);
             Controls.Add(OppenentArea);
             Controls.Add(PersonalArea);
             Name = "gameScreen";
             Text = "gameScreen";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private Panel PersonalArea;
         private Panel OppenentArea;
+        private Label UpdateLabel;
     }
 }

@@ -80,7 +80,7 @@ namespace Socket_client
             await Connect(ip);
         }
 
-        public bool GetInitialMessage()
+        public bool GetWriteMode()
         {
             return _WriteMode;
         }
@@ -111,10 +111,16 @@ namespace Socket_client
                     int y = Convert.ToInt32(message[2].ToString());
                     Coordinate coord = new(x, y);
                     // Handle attack
+                    bool isTouch = _Controller.IsBoatAt(coord);
+                    string response = isTouch.ToString();
+                    await SendMessage(response);
                 }
                 else if (message[0] == 'E')
                 {
                     _WriteMode = true;
+                    _Controller.SwapTurn();
+                    _Controller.SetPlayerTurnMessage();
+                    return;
                 }
             }
         }
