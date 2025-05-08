@@ -12,19 +12,21 @@ using System.Windows.Forms;
 
 namespace BatailleChimiqueWinform.Views
 {
-    public partial class gameScreen: Form
+    public partial class gameScreen : Form
     {
         private const int GridSize = 8;
-        private Button[,] _ChosenMatrix;
+        private Button[,] _PersonnelMatrix;
+        private Button[,] _OppennentMatrix;
 
         private MainController _Controller;
         public gameScreen(MainController controller)
         {
             InitializeComponent();
             _Controller = controller;
-            _ChosenMatrix = new Button[GridSize,GridSize];
-            GenerateGrid(PersonalArea, _ChosenMatrix);
-
+            _PersonnelMatrix = new Button[GridSize, GridSize];
+            _OppennentMatrix = new Button[GridSize, GridSize];
+            GenerateGrid(PersonalArea, _PersonnelMatrix);
+            GenerateGrid(OppenentArea, _OppennentMatrix);
         }
 
         private void GridButton_Click(object sender, EventArgs e)
@@ -37,22 +39,22 @@ namespace BatailleChimiqueWinform.Views
 
             if (hit)
             {
-                clickedButton.BackColor = Color.Red; 
+                clickedButton.BackColor = Color.Red;
             }
             else
             {
                 clickedButton.BackColor = Color.FromArgb(200, 200, 200);
             }
-            clickedButton.Enabled = false;   
+            clickedButton.Enabled = false;
         }
 
 
         public void GenerateGrid(Panel panel, Button[,] Matrix)
         {
             SuspendLayout();
-            for(int Yindex = 0; Yindex < GridSize; Yindex++)
+            for (int Yindex = 0; Yindex < GridSize; Yindex++)
             {
-               for(int Xindex = 0; Xindex < GridSize; Xindex++)
+                for (int Xindex = 0; Xindex < GridSize; Xindex++)
                 {
                     Button button = new Button();
                     Matrix[Yindex, Xindex] = button;
@@ -60,8 +62,8 @@ namespace BatailleChimiqueWinform.Views
 
                     button.FlatStyle = FlatStyle.Flat;
                     button.Size = new Size(50, 50);
-                    button.Location = new Point(Xindex * 50, Yindex * 50);
-                    button.Text = Yindex.ToString() + Xindex.ToString(); 
+                    button.Location = new Point(100+Xindex * 50, 100+Yindex * 50);
+                    button.Text = "";
                     panel.Controls.Add(button);
                     button.Click += GridButton_Click;
 
@@ -99,7 +101,7 @@ namespace BatailleChimiqueWinform.Views
 
                     if (x >= 0 && x < GridSize && y >= 0 && y < GridSize)
                     {
-                        _ChosenMatrix[x, y].BackColor = color;
+                        _PersonnelMatrix[x, y].BackColor = color;
                     }
                 }
             }

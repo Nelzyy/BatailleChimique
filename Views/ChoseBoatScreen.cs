@@ -4,11 +4,31 @@ namespace BatailleChimiqueWinform;
 
 public partial class ChoseBoatScreen : Form
 {
+    public interface Ilistener
+    {
+        bool GetSizeChose();
+        void ShowGrid();
+        void ChoseBoatSize(int size);
+        bool GetTypeChose();
+        void ChoseBoatType(string type);
+        void ChoseBoatOrientation(string orientation);
+        void RotateBoatPreview();
+        void ClearPaquet();
+        void ChoseCase(Coordinate coordinate);
+        bool GetIsPreviewPlaced();
+        void SetValidate();
+        void ValidateBoatPlacement(int id);
+        void SetDelete();
+        Task LaunchCLientAsync();
+        bool GetIsConnected();
+
+    }
+
     private const int GridSize = 8;
-    private MainController _Controller;
+    private Ilistener _Controller;
     private Button[,] _ChosenMatrix;
 
-    public ChoseBoatScreen(MainController controller)
+    public ChoseBoatScreen(Ilistener controller)
     {
         _Controller = controller;
         InitializeComponent();
@@ -181,10 +201,18 @@ public partial class ChoseBoatScreen : Form
         {
             return;
         }
-        if (NbBoatPlacedLabel.Text == "Nombre de bateau placé : 5")
+        if (NbBoatPlacedLabel.Text == "Nombre de bateau placé : 5" && _Controller.GetIsConnected())
         {
             this._Controller.SetValidate();
             return;
+        }
+        else
+        {
+            if (!this._Controller.GetIsConnected())
+            {
+                MessageBox.Show("Veuillez vous connecter avant de valider votre selection");
+                return;
+            }
         }
         int id = 0;
         foreach (Control control in MainPanel.Controls)

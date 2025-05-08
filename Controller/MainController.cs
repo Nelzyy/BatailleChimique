@@ -5,7 +5,7 @@ using BatailleChimiqueWinform.Models;
 using BatailleChimiqueWinform.Views;
 using Socket_client;
 
-public class MainController
+public class MainController : ChoseBoatScreen.Ilistener
 {
     private gameScreen _gameScreen;
     private ChoseBoatScreen _ChoseBoatScreen;
@@ -19,6 +19,7 @@ public class MainController
     private List<int> _IdDisable;
     private Client _Client;
     private IpAsk _IpAskScreen;
+    private bool _IsConnected;
     public MainController()
     {
         this._ChoseBoatScreen = new(this);
@@ -29,15 +30,21 @@ public class MainController
         this._NbRotate = 0;
         this._PaquetPlaced = new();
         this._IdDisable = new();
-        this._Client = new Client();
+        this._Client = new(this);
         this._IpAskScreen = new(this);
+        this._IsConnected = false;
     }
 
     #region code ethanol
 
+    public bool GetIsConnected()
+    {
+        return _IsConnected;
+    }
     public async Task LaunchCLientAsync()
     {
         _IpAskScreen.ShowDialog();
+
     }
     public void ShowChoseBoatScreen()
     {
@@ -342,13 +349,15 @@ public class MainController
         this._gameScreen = new(this);
         _gameScreen.LoadBoatsOnGrid(_PaquetPlaced);
         this._gameScreen.Show();
-       
+
     }
 
     public void SetIp(byte[] ipAddressByte)
     {
         _IpAskScreen.Close();
         _Client.Start(ipAddressByte);
+        _IsConnected = true;
+        _Client.GetInitialMessage();
     }
 
     #endregion
@@ -356,19 +365,23 @@ public class MainController
     #region code laiton
     public bool HandleAttack(Coordinate target)
     {
-        for (int i = 0; i < _PaquetPlaced.Count; i++)
-        {
-            BoatPlacementPaquet boat = _PaquetPlaced[i];
-            for (int j = 0; j < boat.Coordinates.Count; j++)
-            {
-                Coordinate coord = boat.Coordinates[j];
-                if (coord.X == target.X && coord.Y == target.Y)
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
+        //for (int i = 0; i < _PaquetPlaced.Count; i++)
+        //{
+        //    BoatPlacementPaquet boat = _PaquetPlaced[i];
+        //    for (int j = 0; j < boat.Coordinates.Count; j++)
+        //    {
+        //        Coordinate coord = boat.Coordinates[j];
+        //        if (coord.X == target.X && coord.Y == target.Y)
+        //        {
+        //            return true;
+        //        }
+        //    }
+        //}
+        //return false;
+        /*
+         envoyer au client une requete d'attaque avec client.sendAttack
+         */
+        throw new NotImplementedException();
     }
 
     #endregion 

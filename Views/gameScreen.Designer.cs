@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             PersonalArea = new Panel();
-            oppenentArea = new Panel();
+            OppenentArea = new Panel();
             SuspendLayout();
             // 
             // PersonalArea
@@ -39,12 +39,12 @@
             PersonalArea.Size = new Size(600, 600);
             PersonalArea.TabIndex = 0;
             // 
-            // oppenentArea
+            // OppenentArea
             // 
-            oppenentArea.Location = new Point(660, 36);
-            oppenentArea.Name = "oppenentArea";
-            oppenentArea.Size = new Size(600, 600);
-            oppenentArea.TabIndex = 1;
+            OppenentArea.Location = new Point(660, 36);
+            OppenentArea.Name = "OppenentArea";
+            OppenentArea.Size = new Size(600, 600);
+            OppenentArea.TabIndex = 1;
             // 
             // gameScreen
             // 
@@ -52,7 +52,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(40, 40, 40);
             ClientSize = new Size(1284, 669);
-            Controls.Add(oppenentArea);
+            Controls.Add(OppenentArea);
             Controls.Add(PersonalArea);
             Name = "gameScreen";
             Text = "gameScreen";
@@ -62,6 +62,6 @@
         #endregion
 
         private Panel PersonalArea;
-        private Panel oppenentArea;
+        private Panel OppenentArea;
     }
 }

@@ -34,6 +34,7 @@ class Player
     public bool IsTurn
     {
         get => _IsTurn;
+        set => _IsTurn = value;
     }
 
     public void SwapTurn()

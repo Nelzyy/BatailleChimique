@@ -6,6 +6,8 @@ using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using BatailleChimiqueWinform.Controller;
+using BatailleChimiqueWinform.Models;
 
 namespace Socket_client
 {
@@ -14,11 +16,13 @@ namespace Socket_client
         private Socket _ClientSocket;
         private IPEndPoint _IpEndPoint;
         private bool _WriteMode = false;
+        private MainController _Controller;
 
-        public Client()
+        public Client(MainController controller)
         {
             IPHostEntry ipEntry = Dns.GetHostEntry(Dns.GetHostName());
             IPAddress ip = ipEntry.AddressList[0];
+            _Controller = controller;
         }
         private void InitializeConnection(Byte[] ipServeur)
         {
@@ -56,23 +60,6 @@ namespace Socket_client
             _ClientSocket.Close();
         }
 
-        private async Task GetAndSendMessage()
-        {
-            while (_WriteMode)
-            {
-                var message = Console.ReadLine();
-                if (message != null)
-                {
-                    await SendMessage(message);
-                }
-                else
-                {
-                    Disconnect();
-                }
-                _WriteMode = false;
-            }
-        }
-
         private async Task SendMessage(string message)
         {
             var MessageByte = Encoding.UTF8.GetBytes(message);
@@ -88,30 +75,48 @@ namespace Socket_client
             return message;
         }
 
-        public async Task attend()
-        {
-            while (true)
-            {
-
-            }
-        }
-
         public async Task Start(Byte[] ip)
         {
             await Connect(ip);
+        }
 
-            //while (true)
-            //{
-            //    if (_WriteMode)
-            //    {
-            //        await GetAndSendMessage();
-            //    }
-            //    else
-            //    {
-            //        string message = ListenAndReceiveMessage();
-            //        Console.WriteLine(message);
-            //    }
-            //}
+        public bool GetInitialMessage()
+        {
+            return _WriteMode;
+        }
+
+        public async Task<string> sendAttack(Coordinate coord)
+        {
+            string message = "A" + coord.X.ToString() + coord.Y.ToString();
+            await SendMessage(message);
+            string response = ListenAndReceiveMessage();
+            return response;
+        }
+
+        public async Task EndTurn()
+        {
+            string message = "E";
+            await SendMessage(message);
+            _WriteMode = false;
+        }
+
+        public async Task listen()
+        {
+            while (true)
+            {
+                string message = ListenAndReceiveMessage();
+                if (message[0] == 'A')
+                {
+                    int x = Convert.ToInt32(message[1].ToString());
+                    int y = Convert.ToInt32(message[2].ToString());
+                    Coordinate coord = new(x, y);
+                    // Handle attack
+                }
+                else if (message[0] == 'E')
+                {
+                    _WriteMode = true;
+                }
+            }
         }
     }
 }
