@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -59,7 +60,6 @@ namespace BatailleChimiqueWinform.Models
         public void TakeDamage()
         {
             this._IsHit = true;
-            this._IsEmpty = true;
         }
 
         public Bateau? GetBoat()
@@ -70,7 +70,7 @@ namespace BatailleChimiqueWinform.Models
             }
             else
             {
-                throw new Exception("No boat in this case.");
+                return null;
             }
         }
     }

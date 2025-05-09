@@ -98,10 +98,12 @@ namespace BatailleChimiqueWinform.Views
 
             if (hit)
             {
+                MessageBox.Show("Touché !");
                 clickedButton.BackColor = Color.Red;
             }
             else
             {
+                MessageBox.Show("Coulé");
                 clickedButton.BackColor = Color.FromArgb(200, 200, 200);
             }
             clickedButton.Enabled = false;
@@ -142,36 +144,52 @@ namespace BatailleChimiqueWinform.Views
                     Color color;
                     if (_Controller.IsBoatAt(coord))
                     {
-                        Bateau boat = _Controller.GetBoatAt(coord);
-                        switch (boat.Type)
+                        if (_Controller.IsHitAt(coord))
                         {
-                            case MaterialType.Zinc:
-                                color = Color.FromArgb(73, 226, 247);
-                                break;
-                            case MaterialType.Cuivre:
-                                color = Color.FromArgb(247, 237, 73);
-                                break;
-                            case MaterialType.Fer:
-                                color = Color.FromArgb(73, 247, 97);
-                                break;
-                            default:
-                                color = Color.Gray;
-                                break;
+                            color = Color.Red;
                         }
-                    }
-                    else if (_Controller.IsHitAt(coord))
-                    {
-                        color = Color.Red;
+                        else
+                        {
+                            Bateau boat = _Controller.GetBoatAt(coord);
+                            switch (boat.Type)
+                            {
+                                case MaterialType.Zinc:
+                                    color = Color.FromArgb(73, 226, 247);
+                                    break;
+                                case MaterialType.Cuivre:
+                                    color = Color.FromArgb(247, 237, 73);
+                                    break;
+                                case MaterialType.Fer:
+                                    color = Color.FromArgb(73, 247, 97);
+                                    break;
+                                default:
+                                    color = Color.Gray;
+                                    break;
+                            }
+                        }
+
                     }
                     else
                     {
-                        if (_PersonnelMatrix[rowIndex, collumIdex].BackColor == Color.White)
+                        if (_Controller.IsHitAt(coord))
                         {
-                            continue;
+                            color = Color.FromArgb(204, 204, 204);
                         }
-                        color = Color.FromArgb(30, 30, 30);
+                        else
+                        {
+                            color = Color.FromArgb(30, 30, 30);
+                        }
                     }
-                    _PersonnelMatrix[rowIndex, collumIdex].BackColor = color;
+
+                    if (!(_PersonnelMatrix[rowIndex, collumIdex].BackColor == Color.White))
+                    {
+                        _PersonnelMatrix[rowIndex, collumIdex].BackColor = color;
+                    }
+                    else if (color == Color.Red)
+                    {
+                        _PersonnelMatrix[rowIndex, collumIdex].BackColor = color;
+                        ChoseAttackType(coord);
+                    }
                 }
             }
         }
@@ -181,5 +199,28 @@ namespace BatailleChimiqueWinform.Views
             y = (button.Location.X / 50) - 2;
         }
 
+        private void gameScreen_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            _Controller.EndGame();
+        }
+
+        public bool CheckWin()
+        {
+            for (int rowIndex = 0; rowIndex < Board._BoardSize; rowIndex++)
+            {
+                for (int columnIndex = 0; columnIndex < Board._BoardSize; columnIndex++)
+                {
+                    Coordinate coordinate = new(rowIndex, columnIndex);
+                    Button button = _OppennentMatrix[rowIndex, columnIndex];
+                    bool cond = _Controller.IsBoatAt(coordinate) && button.BackColor != Color.Red;
+                    if (cond)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
     }
 }
+

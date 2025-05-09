@@ -41,6 +41,7 @@
             textBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             textBox1.BackColor = Color.FromArgb(70, 70, 70);
             textBox1.BorderStyle = BorderStyle.None;
+            textBox1.ForeColor = Color.White;
             textBox1.Location = new Point(55, 80);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(100, 16);
@@ -51,6 +52,7 @@
             textBox2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             textBox2.BackColor = Color.FromArgb(70, 70, 70);
             textBox2.BorderStyle = BorderStyle.None;
+            textBox2.ForeColor = Color.White;
             textBox2.Location = new Point(193, 80);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(100, 16);
@@ -61,6 +63,7 @@
             textBox3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             textBox3.BackColor = Color.FromArgb(70, 70, 70);
             textBox3.BorderStyle = BorderStyle.None;
+            textBox3.ForeColor = Color.White;
             textBox3.Location = new Point(330, 80);
             textBox3.Name = "textBox3";
             textBox3.Size = new Size(100, 16);
@@ -71,6 +74,7 @@
             textBox4.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             textBox4.BackColor = Color.FromArgb(70, 70, 70);
             textBox4.BorderStyle = BorderStyle.None;
+            textBox4.ForeColor = Color.White;
             textBox4.Location = new Point(485, 80);
             textBox4.Name = "textBox4";
             textBox4.Size = new Size(100, 16);

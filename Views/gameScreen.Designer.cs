@@ -69,6 +69,7 @@
             Controls.Add(PersonalArea);
             Name = "gameScreen";
             Text = "gameScreen";
+            FormClosed += gameScreen_FormClosed;
             ResumeLayout(false);
             PerformLayout();
         }

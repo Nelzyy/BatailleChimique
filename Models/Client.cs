@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -100,7 +101,7 @@ namespace Socket_client
             _WriteMode = false;
         }
 
-        public async Task listen()
+        public async Task Listen()
         {
             while (true)
             {
@@ -123,7 +124,18 @@ namespace Socket_client
                     _Controller.SetPlayerTurnMessage();
                     return;
                 }
+                else if (message[0] == 'X')
+                {
+                    MessageBox.Show("Vous avez perdu.");
+                    _Controller.EndGame();
+                }
             }
+        }
+
+        public async Task SendEnd()
+        {
+            string message = "X";
+            await SendMessage(message);
         }
     }
 }

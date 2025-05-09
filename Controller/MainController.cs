@@ -363,22 +363,6 @@ public class MainController : ChoseBoatScreen.Ilistener
     #region code laiton
     public async Task<bool> HandleAttack(Coordinate target)
     {
-        //for (int i = 0; i < _PaquetPlaced.Count; i++)
-        //{
-        //    BoatPlacementPaquet boat = _PaquetPlaced[i];
-        //    for (int j = 0; j < boat.Coordinates.Count; j++)
-        //    {
-        //        Coordinate coord = boat.Coordinates[j];
-        //        if (coord.X == target.X && coord.Y == target.Y)
-        //        {
-        //            return true;
-        //        }
-        //    }
-        //}
-        //return false;
-        /*
-         envoyer au client une requete d'attaque avec client.sendAttack
-         */
         string result = await _Client.sendAttack(target);
         return bool.Parse(result);
     }
@@ -401,9 +385,16 @@ public class MainController : ChoseBoatScreen.Ilistener
 
     public async Task EndTurn()
     {
+        if (_gameScreen.CheckWin())
+        {
+            MessageBox.Show("Vous avez gagné !");
+            await _Client.SendEnd();
+            EndGame();
+        }
         await _Client.EndTurn();
         _Player.SwapTurn();
-        Task.Run(() => _Client.listen());
+        Task.Run(() => _Client.Listen());
+
     }
 
     public MaterialType GetBoatType(Coordinate coord)
@@ -424,7 +415,7 @@ public class MainController : ChoseBoatScreen.Ilistener
 
     public async Task Listen()
     {
-        Task.Run(() => _Client.listen());
+        Task.Run(() => _Client.Listen());
     }
 
     public void SetPlayerTurnMessage()
@@ -462,6 +453,14 @@ public class MainController : ChoseBoatScreen.Ilistener
             return true;
         }
         return false;
+    }
+
+    public void EndGame()
+    {
+        _Client.Disconnect();
+        _IpAskScreen.Close();
+        _ChoseBoatScreen.Close();
+        Application.Exit();
     }
 
     #endregion
