@@ -113,6 +113,7 @@ namespace Socket_client
                     // Handle attack
                     bool isTouch = _Controller.IsBoatAt(coord);
                     string response = isTouch.ToString();
+                    _Controller.TakeDamage(coord);
                     await SendMessage(response);
                 }
                 else if (message[0] == 'E')

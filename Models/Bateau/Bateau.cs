@@ -18,7 +18,7 @@ public enum SizeBoat
     bigMiddle,
     big
 }
-class Bateau
+public class Bateau
 {
     private int _Id;
     protected MaterialType _Type;

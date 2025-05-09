@@ -55,5 +55,23 @@ namespace BatailleChimiqueWinform.Models
                 throw new Exception("No boat in this case.");
             }
         }
+
+        public void TakeDamage()
+        {
+            this._IsHit = true;
+            this._IsEmpty = true;
+        }
+
+        public Bateau? GetBoat()
+        {
+            if (this._Boat != null)
+            {
+                return this._Boat;
+            }
+            else
+            {
+                throw new Exception("No boat in this case.");
+            }
+        }
     }
 }

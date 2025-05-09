@@ -30,6 +30,9 @@ namespace BatailleChimiqueWinform.Views
             _IsTypeChose = false;
             _type = null;
             GenerateGrid(PersonalArea, _PersonnelMatrix);
+
+            LoadBoatsOnGrid(_Controller.GetPaquetPlaced());
+
             GenerateGrid(OppenentArea, _OppennentMatrix);
             SetPlayerTurnMessage();
             UpdateLabel.Visible = true;
@@ -37,7 +40,6 @@ namespace BatailleChimiqueWinform.Views
             if (!_Controller.GetPlayerTurn())
             {
                 _Controller.Listen();
-                MessageBox.Show("C'est le tour de l'enemie");
             }
         }
 
@@ -77,12 +79,16 @@ namespace BatailleChimiqueWinform.Views
                 {
                     _type = _Controller.GetBoatType(target);
                     _IsTypeChose = true;
+
+                    _PersonnelMatrix[target.X, target.Y].BackColor = Color.White;
                 }
             }
             else
             {
                 _type = null;
                 _IsTypeChose = false;
+
+                LoadBoatsOnGrid(_Controller.GetPaquetPlaced());
             }
         }
 
@@ -120,7 +126,6 @@ namespace BatailleChimiqueWinform.Views
                     button.Text = "";
                     panel.Controls.Add(button);
                     button.Click += GridButton_Click;
-
                 }
 
             }
@@ -129,34 +134,44 @@ namespace BatailleChimiqueWinform.Views
 
         public void LoadBoatsOnGrid(List<BoatPlacementPaquet> boats)
         {
-            foreach (var boat in boats)
+            for (int rowIndex = 0; rowIndex < GridSize; rowIndex++)
             {
-                Color color;
-                switch (boat.MaterialType)
+                for (int collumIdex = 0; collumIdex < GridSize; collumIdex++)
                 {
-                    case MaterialType.Zinc:
-                        color = Color.FromArgb(73, 226, 247);
-                        break;
-                    case MaterialType.Cuivre:
-                        color = Color.FromArgb(247, 237, 73);
-                        break;
-                    case MaterialType.Fer:
-                        color = Color.FromArgb(73, 247, 97);
-                        break;
-                    default:
-                        color = Color.Gray;
-                        break;
-                }
-
-                foreach (var coord in boat.Coordinates)
-                {
-                    int x = coord.X;
-                    int y = coord.Y;
-
-                    if (x >= 0 && x < GridSize && y >= 0 && y < GridSize)
+                    Coordinate coord = new(rowIndex, collumIdex);
+                    Color color;
+                    if (_Controller.IsBoatAt(coord))
                     {
-                        _PersonnelMatrix[x, y].BackColor = color;
+                        Bateau boat = _Controller.GetBoatAt(coord);
+                        switch (boat.Type)
+                        {
+                            case MaterialType.Zinc:
+                                color = Color.FromArgb(73, 226, 247);
+                                break;
+                            case MaterialType.Cuivre:
+                                color = Color.FromArgb(247, 237, 73);
+                                break;
+                            case MaterialType.Fer:
+                                color = Color.FromArgb(73, 247, 97);
+                                break;
+                            default:
+                                color = Color.Gray;
+                                break;
+                        }
                     }
+                    else if (_Controller.IsHitAt(coord))
+                    {
+                        color = Color.Red;
+                    }
+                    else
+                    {
+                        if (_PersonnelMatrix[rowIndex, collumIdex].BackColor == Color.White)
+                        {
+                            continue;
+                        }
+                        color = Color.FromArgb(30, 30, 30);
+                    }
+                    _PersonnelMatrix[rowIndex, collumIdex].BackColor = color;
                 }
             }
         }

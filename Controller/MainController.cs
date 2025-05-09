@@ -347,9 +347,7 @@ public class MainController : ChoseBoatScreen.Ilistener
         this._ChoseBoatScreen.SayReady();
         this._ChoseBoatScreen.Hide();
         this._gameScreen = new(this);
-        _gameScreen.LoadBoatsOnGrid(_PaquetPlaced);
         this._gameScreen.Show();
-
     }
 
     public async Task SetIp(byte[] ipAddressByte)
@@ -435,6 +433,35 @@ public class MainController : ChoseBoatScreen.Ilistener
         {
             _gameScreen.SetPlayerTurnMessage();
         }
+    }
+
+    public List<BoatPlacementPaquet> GetPaquetPlaced()
+    {
+        return _PaquetPlaced;
+    }
+
+    public void TakeDamage(Coordinate coor)
+    {
+        Board myBoard = _Player.PlayerBoard;
+        CaseBoard targetedCase = myBoard.GetCase(coor.X, coor.Y);
+        targetedCase.TakeDamage();
+        _gameScreen.LoadBoatsOnGrid(_PaquetPlaced);
+    }
+
+    public Bateau GetBoatAt(Coordinate coord)
+    {
+        return _Player.PlayerBoard.GetCase(coord.X, coord.Y).GetBoat()!;
+    }
+
+    public bool IsHitAt(Coordinate coord)
+    {
+        Board myBoard = _Player.PlayerBoard;
+        CaseBoard targetedCase = myBoard.GetCase(coord.X, coord.Y);
+        if (targetedCase.IsHit)
+        {
+            return true;
+        }
+        return false;
     }
 
     #endregion
